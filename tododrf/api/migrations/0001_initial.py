@@ -17,20 +17,26 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TaskList',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.TaskList')),
+                ('owner', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('parent', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.CASCADE, to='api.TaskList')),
             ],
         ),
         migrations.CreateModel(
             name='Task',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('summary', models.CharField(max_length=50)),
                 ('notes', models.CharField(max_length=200)),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.Task')),
-                ('task_list', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.TaskList')),
+                ('parent', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='api.Task')),
+                ('task_list', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.CASCADE, to='api.TaskList')),
             ],
         ),
     ]
