@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True,
                                         primary_key=True, serialize=False, verbose_name='ID')),
                 ('summary', models.CharField(max_length=50)),
-                ('notes', models.CharField(max_length=200)),
+                ('notes', models.CharField(max_length=200, blank=True)),
                 ('parent', models.ForeignKey(
                     on_delete=django.db.models.deletion.CASCADE, to='api.Task')),
                 ('task_list', models.ForeignKey(

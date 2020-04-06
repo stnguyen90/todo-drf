@@ -12,4 +12,4 @@ class Task(models.Model):
     task_list = models.ForeignKey(TaskList, on_delete=models.CASCADE)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     summary = models.CharField(max_length=50)
-    notes = models.CharField(max_length=200)
+    notes = models.CharField(max_length=200, blank=True)
