@@ -19,10 +19,10 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class TaskListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = TaskList
-        fields = ['url', 'parent', 'name']
+        fields = ['url', 'owner', 'parent', 'name']
 
 
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Task
-        fields = ['url', 'parent', 'summary', 'notes']
+        fields = ['url', 'task_list', 'parent', 'summary', 'notes']
