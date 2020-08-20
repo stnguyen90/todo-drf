@@ -13,10 +13,18 @@
 		"python.linting.enabled": true,
 		"python.linting.pylintEnabled": false,
 		"python.linting.flake8Enabled": true,
+		"rest-client.environmentVariables": {
+			"local": {
+				"baseUrl": "http://127.0.0.1:8000",
+				"username": "admin",
+				"password": "password123"
+			}
+		}
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"ms-python.python"
+		"ms-python.python",
+		"humao.rest-client"
 	]
 	// Uncomment the next line if you want start specific services in your Docker Compose config.
 	// "runServices": [],

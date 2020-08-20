@@ -1,28 +1,45 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
 
 from tododrf.api.models import TaskList, Task
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'groups']
+        fields = ['id', 'username', 'email', 'groups']
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class GroupSerializer(ModelSerializer):
     class Meta:
         model = Group
-        fields = ['url', 'name']
+        fields = ['id', 'name']
 
 
-class TaskListSerializer(serializers.HyperlinkedModelSerializer):
+class OwnerFilteredPrimaryKeyRelatedField(PrimaryKeyRelatedField):
+    def get_queryset(self):
+        request = self.context.get('request', None)
+        queryset = super().get_queryset()
+        if not request or not queryset:
+            return None
+        return queryset.filter(owner=request.user)
+
+
+class TaskListSerializer(ModelSerializer):
+    parent = OwnerFilteredPrimaryKeyRelatedField(
+        queryset=TaskList.objects, allow_null=True)
+
     class Meta:
         model = TaskList
-        fields = ['url', 'owner', 'parent', 'name']
+        fields = '__all__'
+        read_only_fields = ['owner']
 
 
-class TaskSerializer(serializers.HyperlinkedModelSerializer):
+class TaskSerializer(ModelSerializer):
+    task_list = OwnerFilteredPrimaryKeyRelatedField(queryset=TaskList.objects)
+    parent = OwnerFilteredPrimaryKeyRelatedField(
+        queryset=Task.objects, allow_null=True)
+
     class Meta:
         model = Task
-        fields = ['url', 'task_list', 'parent', 'summary', 'notes']
+        fields = '__all__'

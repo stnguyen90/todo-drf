@@ -1,0 +1,8 @@
+###
+
+# @name getTaskLists
+POST {{baseUrl}}/api/task_lists HTTP/1.1
+Authorization: Basic {{username}}:{{password}}
+Content-Type: application/json
+
+###
